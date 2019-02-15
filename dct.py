@@ -1,58 +1,31 @@
-from numpy import array, empty
+from numpy import array, empty, allclose
 from scipy.fftpack import fft, dct, idct
-import random
-import time
 
-def createDummy(size):
-	a = empty([size, size])
-	for i in range(size):
-		for j in range(size):
-			a[i,j] = random.randint(0,256)
-	return a
+# Wrap 2D SciPy DCT (FTT)
+def dct2(a):
+	size1=a.shape[0]
+	size2=a.shape[1]
+	output = empty([size1, size2])
 
-a = []
+	# DCT2 (DCT by row and then by column)
+	for i in range(0,size1):
+		output[i] = dct(a[i], 2, norm = 'ortho')
 
-for i in range(5,5):
-	print("Generating", i*500, "x",i*500, "array...")
-	a.append(createDummy(i*500))
+	for i in range(0,size2):
+		output[:, i] = dct(output[:, i], 2, norm = 'ortho')
 
-for i in range(0, len(a)):
-	t = time.time()
-	dct(a[i], 2)
-	elapsed = time.time() - t
-	print("Size:",(i+5)*500,", scipyDCTtime:", elapsed, "s, myDCTtime:","","s")
+	return output
 
+# Wrap 2D SciPy IDCT2 (FTT)
+def idct2(a):
+	size1=a.shape[0]
+	size2=a.shape[1]
+	output = empty([size1, size2])
 
-sample = empty([8,8])
+	for i in range(0,size2):
+		output[:, i] = idct(a[:, i], 2, norm = 'ortho')
 
-sample = array([[231, 32, 233, 161, 24, 71, 140, 245],
-				[247, 40, 248, 245, 124, 204, 36, 107],
-				[234 ,202, 245, 167, 9, 217, 239, 173],
-				[193, 190, 100, 167, 43, 180, 8, 70],
-				[11, 24, 210, 177, 81, 243, 8, 112],
-				[97, 195, 203, 47, 125, 114, 165, 181],
-				[193, 70, 174, 167, 41, 30, 127, 245],
-				[87, 149, 57, 192, 65, 129, 178, 228]])
+	for i in range(0,size1):
+		output[i] = idct(output[i], 2, norm = 'ortho')
 
-print(sample)
-
-print(dct(sample[0], 2, norm = 'ortho'))
-
-# DCT2 (DCT by row and then by column)
-for i in range(0,8):
-	sample[i] = dct(sample[i], 2, norm = 'ortho')
-
-for i in range(0,8):
-	sample[:, i] = dct(sample[:, i], 2, norm = 'ortho')
-
-print(sample)
-
-# Inverse DCT2
-
-for i in range(0,8):
-	sample[:, i] = idct(sample[:, i], 2, norm = 'ortho')
-
-for i in range(0,8):
-	sample[i] = idct(sample[i], 2, norm = 'ortho')
-
-print(sample)
+	return output
