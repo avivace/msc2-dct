@@ -32,8 +32,14 @@ export default {
 				this.startingImage = e.target.result;
 				let image = new Image();
 				image.src = e.target.result;
-				this.height = image.height;
-				this.width = image.width;
+				console.log(image)
+
+				// Once it's ready, read height and width
+				image.onload = function() {
+					this.height = image.height;
+					this.width = image.width;
+				}.bind(this)
+
 			}.bind(this)
 
 			reader.readAsDataURL(file[0]);
