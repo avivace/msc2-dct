@@ -30,7 +30,7 @@ export default {
 		d:0,
 		imageReady: false,
 		imageData: null,
-		beta:null
+		beta:1
 	}},
 	methods:{
 		update: function(){
