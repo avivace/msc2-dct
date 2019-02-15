@@ -1,7 +1,7 @@
 <template>
 	<div class="hello">
-		<h1>MCS2 - JPEG UI </h1>
-		<h2> Antonio Vivace - February 2019 </h2>
+		<h1>MCS2 - DCT2 UI </h1>
+		<h2> Antonio Vivace - February 2019 - WORK IN PROGRESS</h2>
 		
 		<form enctype="multipart/form-data">
 		<input type="file" name="sourceImage" @change="filesChange($event.target.files);"
@@ -34,8 +34,7 @@ export default {
 	}},
 	methods:{
 		update: function(){
-			console.log("value changed")
-						// Upload it to the backend
+			// Upload it to the backend
 			var formData = new FormData();
 			formData.append("sourceImage", this.imageData);
 			formData.append("d", this.d)
@@ -47,7 +46,6 @@ export default {
 					}
 				})  
 			.then(function (response) {
-				console.log(response.data)
 				self.outputImage = response.data.image
 			})
 			.catch(function (error) {
@@ -60,11 +58,11 @@ export default {
 			// Render the selected image
 			reader.onload = function(e){
 				this.imageReady = true,
-				console.log(e.target.result)
+				//console.log(e.target.result)
 				this.startingImage = e.target.result;
 				let image = new Image();
 				image.src = e.target.result;
-				console.log(image)
+				//console.log(image)
 
 				// Once it's ready, read height and width
 				image.onload = function() {
@@ -77,6 +75,7 @@ export default {
 			reader.readAsDataURL(file[0]);
 
 			this.imageData = file[0]
+			this.update()
 		}
 	}
 }
