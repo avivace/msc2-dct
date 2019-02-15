@@ -31,7 +31,8 @@ def my_dct2(a):
     # DCT2 (DCT by row and then by column)
     for i in range(0,size1):
         output[i] = mydct2_mono(a[i])
-
+    
+    # The [:, n] notation gives access the n-th column
     for i in range(0,size2):
         output[:, i] = mydct2_mono(output[:, i])
 
