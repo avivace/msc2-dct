@@ -28,12 +28,15 @@ def pil_to_base64(pil_img):
 @app.route('/image', methods=["POST"])
 def image():
     bytestream = request.files["sourceImage"].read()
-    img = Image.open(io.BytesIO(bytestream))
-    imagearray = np.asarray( img, dtype="float" )
-    print(imagearray.shape)
+
+    d = request.form["d"]
+    beta = request.form["beta"]
     h = imagearray.shape[0]
     w = imagearray.shape[1]
-    print(dct2(imagearray))
+
+    img = Image.open(io.BytesIO(bytestream))
+    imagearray = np.asarray( img, dtype="float" )
+    
 
     # DO THINGS ON THE IMAGE
     img = Image.fromarray(idct2(dct2(imagearray)).astype(np.uint8), mode='L')
