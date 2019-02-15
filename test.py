@@ -1,4 +1,4 @@
-from dct import dct2, idct2
+from dct import dct2, idct2, my_dct2
 from numpy import array, empty, allclose
 from scipy.fftpack import fft, dct, idct
 
@@ -17,4 +17,6 @@ print(sample)
 
 print(dct(sample[0], 2, norm= 'ortho'))
 print(dct2(sample))
-print(allclose (sample, idct2(dct2(sample))))
+
+print("sample == idct2(dct2(sample))", allclose (sample, idct2(dct2(sample))))
+print("dct2(sample) == my_dct2(sample)", allclose (dct2(sample), my_dct2(sample)))
