@@ -12,18 +12,18 @@
 				</form>
     	</v-flex>
       <v-flex xs6 v-if="startingImage">
-      	<span style="font-size:24px">Source</span>
-        		<img width="100%" :src=startingImage >
+      	<span style="font-size:24px">Source</span><br>
+        		<img width="100%"  :src=startingImage >
       </v-flex>
       	
             <v-flex xs6 v-if="startingImage">
-            	      	<span style="font-size:24px">Processed</span>
+            <span style="font-size:24px">Processed</span><br>
 
         		<img width="100%" :src=outputImage >
 
       </v-flex>
       <v-flex xs12 v-if="startingImage">
-      	    <v-btn
+      	    <v-btn flat large outline
       :loading="loading"
       :disabled="loading"
       
@@ -68,7 +68,7 @@ export default {
 			formData.append("d", this.d)
 			formData.append("beta", this.beta)
 			var self = this;
-			this.$axios.post('http://localhost:5000/image', formData, {
+			this.$axios.post('https://avivace.com/api/image', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 					}
