@@ -1,20 +1,45 @@
 <template>
 	<div class="hello">
-		<h1>MCS2 - DCT2 UI </h1>
-		<h2> Antonio Vivace - February 2019 - WORK IN PROGRESS</h2>
+		  <v-container grid-list-md text-xs-center>
+    <v-layout row wrap>
+    	<v-flex xs12>
+		<center><h1 style="font-size:64px; font-weight: 300">MCS2 - DCT2 UI </h1></center>
+		<span style="font-size:18px;font-weight: 400"> Antonio Vivace,  February 2019</span>
 		
 		<form enctype="multipart/form-data">
 		<input type="file" name="sourceImage" @change="filesChange($event.target.files);"
 						accept="image/*" class="input-file">
 				</form>
-		
-		<img :src=startingImage width=500 height=500 v-if="startingImage">
-		<img :src=outputImage width=500 height=500 v-if="startingImage">
+    	</v-flex>
+      <v-flex xs6 v-if="startingImage">
+      	<span style="font-size:24px">Source</span>
+        		<img width="100%" :src=startingImage >
+      </v-flex>
+      	
+            <v-flex xs6 v-if="startingImage">
+            	      	<span style="font-size:24px">Processed</span>
+
+        		<img width="100%" :src=outputImage >
+
+      </v-flex>
+      <v-flex xs12 v-if="startingImage">
+      	    <v-btn
+      :loading="loading"
+      :disabled="loading"
+      
+      @click="update"
+    >
+      Applica
+    </v-btn>
+
+      </v-flex>
+    </v-layout>
+  </v-container>
 		<div class="slidecontainer">
 			<template v-if="imageReady">
 			{{ height }} x {{width }}
-  d <input @change="update" type="range" min="0" :max="height+width-2" v-model="d" class="slider" id="dSlider"> {{ d}} <br>
-  b <input @change="update" type="number" step="1" v-model="beta">
+  d <input type="range" min="0" :max="height+width-2" v-model="d" class="slider" id="dSlider"> {{ d}} <br>
+  b <input type="number" step="1" v-model="beta">
 </template>
 </div>
 	</div>
@@ -30,11 +55,14 @@ export default {
 		d:0,
 		imageReady: false,
 		imageData: null,
-		beta:1
+		beta:1,
+		loading: false,
+		loader: null,
 	}},
 	methods:{
 		update: function(){
 			// Upload it to the backend
+			this.loading = true;
 			var formData = new FormData();
 			formData.append("sourceImage", this.imageData);
 			formData.append("d", this.d)
@@ -47,6 +75,7 @@ export default {
 				})  
 			.then(function (response) {
 				self.outputImage = response.data.image
+				self.loading = false;
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -75,12 +104,25 @@ export default {
 			reader.readAsDataURL(file[0]);
 
 			this.imageData = file[0]
-			this.update()
+			
 		}
 	}
 }
 </script>
 
-<style scoped>
-
+<style>
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
+}
+html{
+	font-family: 'Inter';
+}
+img{
+  
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 5px;
+  -moz-box-shadow: rgba(0,0,0,0.5) 0 2px 5px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 2px 5px;
+}
 </style>
