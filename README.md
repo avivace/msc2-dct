@@ -4,7 +4,7 @@ Final project for the *Methods of Scientific Computing* course, from my MSc. Com
 
 ### [Slides](https://github.com/avivace/msc2-dct/blob/master/mcs2-slides.pdf)
 
-
+![](screenshot.png)
 ### Deploy
 
 Backend
