@@ -1,6 +1,6 @@
 # MSC2-dct
 
-Final project for the *Methods of Scientific Computing* course, from my MSc. Comparing naïve and scipy implementations of DCT2/IDCT2, while exposing the scipy implementation on a web app.
+Final project for the *Methods of Scientific Computing* course, from my [MSc in Computer Science](https://github.com/avivace/compsci). Comparing naïve and scipy implementations of DCT2/IDCT2, while exposing the scipy implementation on a web app.
 
 ### [Slides](https://github.com/avivace/msc2-dct/blob/master/mcs2-slides.pdf)
 
